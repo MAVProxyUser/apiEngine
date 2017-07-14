@@ -1,0 +1,6 @@
+requests
+termcolor
+flask
+PyYAML
+coveralls
+coverage

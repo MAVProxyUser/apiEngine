@@ -1,0 +1,33 @@
+- config:
+    request:
+        verify: false
+
+- test:
+    name: gen_task
+    request:
+        url: http://djigo.aasky.net/api/v1/djicare/gen_task
+        method: POST
+        headers:
+            HOST: aasky.net
+            apikey: TEST_KEY
+        data:
+            main_sn: "0BMLE4J015003Z"
+            product_type: "Spark"
+            lang: zh-CN
+    extract_binds:
+        user_uuid: content.uuid
+    validators:
+        - {"check": "content", "comparator": "contains", "expected": "uuid"}
+
+- test:
+    name: result
+    request:
+        url: http://djigo.aasky.net/api/v1/djicare/result
+        method: POST
+        headers:
+            HOST: aasky.net
+            apikey: TEST_KEY
+        data:
+            uuid: $user_uuid
+    validators:
+        - {"check": "content", "comparator": "contains", "expected": "content.data.active_time"}
